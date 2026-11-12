@@ -7,6 +7,12 @@ rule-based retention actions → FastAPI backend → Streamlit dashboard → Doc
 > (purchase rate decay, discount sensitivity, returns, support tickets). Swap in a real dataset (e.g. UCI Online Retail II)
 > by producing the same two CSVs: `customers.csv` and `transactions.csv` (see columns in `data_gen.py`).
 
+   ## Screenshots
+
+   ![Customers and cohorts](docs/dashboard-cohorts.png)
+
+   ![Why a customer is likely to churn (SHAP)](docs/explain-customer.png)
+
 ## Architecture
 
 ```

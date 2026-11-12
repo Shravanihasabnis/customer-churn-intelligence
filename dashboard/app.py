@@ -91,7 +91,7 @@ if page == "Customers & Cohorts":
                               "avg_clv": "Avg CLV", "avg_orders": "Avg orders", "aov": "AOV",
                               "avg_churn_prob": "Avg churn prob"})
     st.dataframe(tbl, hide_index=True, width="stretch",
-                 column_config={"Avg churn prob": st.column_config.ProgressColumn(format="%.0f%%", min_value=0, max_value=1),
+                 column_config={"Avg churn prob": st.column_config.ProgressColumn(format="percent", min_value=0, max_value=1),
                                 "Revenue": st.column_config.NumberColumn(format="$%.0f"),
                                 "Avg CLV": st.column_config.NumberColumn(format="$%.0f"),
                                 "AOV": st.column_config.NumberColumn(format="$%.0f")})
@@ -103,7 +103,7 @@ if page == "Customers & Cohorts":
     res = get("/customers", limit=100, **({"risk": risk} if risk != "All" else {}), **({"segment": sg} if sg != "All" else {}))
     st.caption(f"{res['total']:,} customers match · showing top 100 by churn probability")
     st.dataframe(pd.DataFrame(res["items"]), hide_index=True, width="stretch", height=320,
-                 column_config={"churn_prob": st.column_config.ProgressColumn("Churn prob", format="%.0f%%", min_value=0, max_value=1),
+                 column_config={"churn_prob": st.column_config.ProgressColumn("Churn prob", format="percent", min_value=0, max_value=1),
                                 "ltv": st.column_config.NumberColumn("LTV", format="$%.0f"),
                                 "expected_revenue_at_risk": st.column_config.NumberColumn("Revenue at risk", format="$%.0f")})
 
@@ -140,7 +140,7 @@ elif page == "Churn Risk":
     st.subheader("Highest-value customers at risk")
     top = get("/customers", risk="High", sort="expected_revenue_at_risk", limit=25)
     st.dataframe(pd.DataFrame(top["items"]), hide_index=True, width="stretch",
-                 column_config={"churn_prob": st.column_config.ProgressColumn("Churn prob", format="%.0f%%", min_value=0, max_value=1),
+                 column_config={"churn_prob": st.column_config.ProgressColumn("Churn prob", format="percent", min_value=0, max_value=1),
                                 "ltv": st.column_config.NumberColumn("LTV", format="$%.0f"),
                                 "expected_revenue_at_risk": st.column_config.NumberColumn("Revenue at risk", format="$%.0f")})
 
@@ -202,7 +202,7 @@ elif page == "Retention Actions":
                      "Top action": c["recommendations"][0]["action"],
                      "Why": ", ".join(c["top_risk_drivers"][:3])})
     st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch",
-                 column_config={"Churn prob": st.column_config.ProgressColumn(format="%.0f%%", min_value=0, max_value=1),
+                 column_config={"Churn prob": st.column_config.ProgressColumn(format="percent", min_value=0, max_value=1),
                                 "Revenue at risk": st.column_config.NumberColumn(format="$%.0f")})
 
     st.subheader("What-if scorer")
